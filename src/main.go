@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/maxnetish/algo-go/src/bubble-sort"
+	"github.com/maxnetish/algo-go/src/quick-sort"
 	"github.com/maxnetish/algo-go/src/utils"
 )
 
@@ -45,15 +46,24 @@ func main() {
 		},
 		{
 			args: utils.MakeBigArrayParams{
-				NumberOfElements: 20000,
-				To:               100000,
+				NumberOfElements: 100000,
+				To:               1000,
 			},
 		},
 	}
 
+	fmt.Println("Bubble sort (cocktale sort)")
 	for _, oneCase := range cases {
 		dur = utils.ElapsedTime(func() {
 			swaps, passes = bubble.Sort(utils.MakeBigArray(oneCase.args))
+		})
+		fmt.Println("elements:", oneCase.args.NumberOfElements, "duration:", dur, "swaps:", swaps, "passes:", passes)
+	}
+
+	fmt.Println("Quick sort (Charles Antony Richard Hoare sort)")
+	for _, oneCase := range cases {
+		dur = utils.ElapsedTime(func() {
+			swaps, passes = quick.Sort(utils.MakeBigArray(oneCase.args))
 		})
 		fmt.Println("elements:", oneCase.args.NumberOfElements, "duration:", dur, "swaps:", swaps, "passes:", passes)
 	}
