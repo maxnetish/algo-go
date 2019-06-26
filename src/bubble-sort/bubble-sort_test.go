@@ -22,6 +22,7 @@ func check(a []int) bool {
 }
 
 func TestSort(t *testing.T) {
+
 	type args struct {
 		a []int
 	}
@@ -60,7 +61,7 @@ func TestSort(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			Sort(tt.args.a)
+			BubbleSorter.Sort(tt.args.a)
 			if !check(tt.args.a) {
 				t.Fail()
 			}

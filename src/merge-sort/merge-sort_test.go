@@ -34,9 +34,69 @@ func TestSort(t *testing.T) {
 			},
 		},
 		{
+			name: "Small array 2",
+			args: args{
+				a: []int{1, 3, 5, 4, 2, 1, 1, 1, 325, 2, 200},
+			},
+		},
+		{
+			name: "Small array 2",
+			args: args{
+				a: []int{1, 3, 5, 4, 2, 1, 1, 1, 0, 2, 200, 199},
+			},
+		},
+		{
+			name: "Small array 3",
+			args: args{
+				a: []int{1, 3, 5, 4, 2, 1, 1, 1, 0, 2, 200, 199, 198},
+			},
+		},
+		{
+			name: "Small array 4",
+			args: args{
+				a: []int{1, 3, 5, 4, 2, 1, 1, 1, 0, 2, 200, 199, 198, 197},
+			},
+		},
+		{
+			name: "Small array 5",
+			args: args{
+				a: []int{196, 1, 3, 5, 4, 2, 1, 1, 1, 0, 2, 200, 199, 198, 197},
+			},
+		},
+		{
+			name: "Small array 6",
+			args: args{
+				a: []int{196, 195, 1, 3, 5, 4, 2, 1, 1, 1, 0, 2, 200, 199, 198, 197},
+			},
+		},
+		{
+			name: "Small array 7",
+			args: args{
+				a: []int{196, 195, 194, 1, 3, 5, 4, 2, 1, 1, 1, 0, 2, 200, 199, 198, 197},
+			},
+		},
+		{
+			name: "Small array 8",
+			args: args{
+				a: []int{196, 195, 194, 193, 1, 3, 5, 4, 2, 1, 1, 1, 0, 2, 200, 199, 198, 197},
+			},
+		},
+		{
+			name: "Small array 9",
+			args: args{
+				a: []int{196, 195, 194, 193, 192, 1, 3, 5, 4, 2, 1, 1, 1, 0, 2, 200, 199, 198, 197},
+			},
+		},
+		{
+			name: "Small array 10",
+			args: args{
+				a: []int{196, 195, 194, 193, 192, 191, 1, 3, 5, 4, 2, 1, 1, 1, 0, 2, 200, 199, 198, 197},
+			},
+		},
+		{
 			name: "Bigger array",
 			args: args{
-				a: []int{1, 3, 5, 4, 2, 1, 1, 1, 325, 2, 1, 3, 5, 4, 2, 11, 21, 1, 325, 2, 1, 3, 5, 4, 2, 14, 10, 325, 2},
+				a: []int{1, 3, 5, 4, 2, 1, 1, 1, 325, 2, 1, 3, 5, 4, 2, 11, 21, 1, 325, 2, 1, 3, 5, 4, 2, 14, 10, 325, 2, 0},
 			},
 		},
 		{
@@ -54,8 +114,8 @@ func TestSort(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result, _, _ := Sort(tt.args.a)
-			if !check(result) {
+			MergeSorter.Sort(tt.args.a)
+			if !check(tt.args.a) {
 				t.Fail()
 			}
 		})

@@ -5,8 +5,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/maxnetish/algo-go/src/bubble-sort"
-	"github.com/maxnetish/algo-go/src/merge-sort"
+	. "github.com/maxnetish/algo-go/src/bubble-sort"
+	. "github.com/maxnetish/algo-go/src/merge-sort"
 	"github.com/maxnetish/algo-go/src/quick-sort"
 	"github.com/maxnetish/algo-go/src/utils"
 )
@@ -15,7 +15,7 @@ func main() {
 	fmt.Println("Hello Go!")
 	fmt.Println("Arguments: ", os.Args)
 
-	var swaps, passes, copies int
+	var swaps, passes int
 	var dur time.Duration
 
 	cases := []struct {
@@ -69,9 +69,9 @@ func main() {
 	for ind, oneCase := range cases {
 		if ind < 4 {
 			dur = utils.ElapsedTime(func() {
-				swaps, passes = bubble.Sort(utils.MakeBigArray(oneCase.args))
+				BubbleSorter.Sort(utils.MakeBigArray(oneCase.args))
 			})
-			fmt.Println("elements:", oneCase.args.NumberOfElements, "duration:", dur, "swaps:", swaps, "passes:", passes)
+			fmt.Println("elements:", oneCase.args.NumberOfElements, "duration:", dur)
 		}
 	}
 	fmt.Println("We will not try to bubble sort out anymore. )")
@@ -87,8 +87,8 @@ func main() {
 	fmt.Println("Merge sort (John von Neumann sort)")
 	for _, oneCase := range cases {
 		dur = utils.ElapsedTime(func() {
-			_, passes, copies = merge.Sort(utils.MakeBigArray(oneCase.args))
+			MergeSorter.Sort(utils.MakeBigArray(oneCase.args))
 		})
-		fmt.Println("elements:", oneCase.args.NumberOfElements, "duration:", dur, "slice copies:", copies, "passes:", passes)
+		fmt.Println("elements:", oneCase.args.NumberOfElements, "duration:", dur)
 	}
 }
