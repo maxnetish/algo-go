@@ -1,14 +1,20 @@
 package merge
 
-// MergeSorter implements Sorter interface
-var MergeSorter = struct {
-	Sort func([]int)
-}{
-	Sort: sort,
+type sorter struct{}
+
+// Sorter singletone implements Sorter interface
+var Sorter = sorter{}
+
+func (s *sorter) Slow() bool {
+	return false
+}
+
+func (s *sorter) String() string {
+	return "Merge sort (John von Neumann sort)"
 }
 
 // Sort implements merge sort algorythme (by John von Neumann)
-func sort(a []int) {
+func (s *sorter) Sort(a []int) {
 	mergesortIterative(a)
 	return
 }

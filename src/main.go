@@ -5,9 +5,10 @@ import (
 	"os"
 	"time"
 
-	. "github.com/maxnetish/algo-go/src/bubble-sort"
-	. "github.com/maxnetish/algo-go/src/merge-sort"
+	"github.com/maxnetish/algo-go/src/bubble-sort"
+	"github.com/maxnetish/algo-go/src/merge-sort"
 	"github.com/maxnetish/algo-go/src/quick-sort"
+	"github.com/maxnetish/algo-go/src/shell-sort"
 	"github.com/maxnetish/algo-go/src/utils"
 )
 
@@ -15,7 +16,6 @@ func main() {
 	fmt.Println("Hello Go!")
 	fmt.Println("Arguments: ", os.Args)
 
-	var swaps, passes int
 	var dur time.Duration
 
 	cases := []struct {
@@ -65,30 +65,30 @@ func main() {
 		},
 	}
 
-	fmt.Println("Bubble sort (cocktale sort)")
-	for ind, oneCase := range cases {
-		if ind < 4 {
-			dur = utils.ElapsedTime(func() {
-				BubbleSorter.Sort(utils.MakeBigArray(oneCase.args))
-			})
-			fmt.Println("elements:", oneCase.args.NumberOfElements, "duration:", dur)
+	sorters := []Sorter{&bubble.Sorter, &quick.Sorter, &merge.Sorter, &shell.Sorter}
+
+	for _, s := range sorters {
+		numberOfCasesToRun := len(cases)
+		if s.Slow() {
+			numberOfCasesToRun = 5
 		}
-	}
-	fmt.Println("We will not try to bubble sort out anymore. )")
-
-	fmt.Println("Quick sort (Charles Antony Richard Hoare sort)")
-	for _, oneCase := range cases {
-		dur = utils.ElapsedTime(func() {
-			swaps, passes = quick.Sort(utils.MakeBigArray(oneCase.args))
-		})
-		fmt.Println("elements:", oneCase.args.NumberOfElements, "duration:", dur, "swaps:", swaps, "passes:", passes)
-	}
-
-	fmt.Println("Merge sort (John von Neumann sort)")
-	for _, oneCase := range cases {
-		dur = utils.ElapsedTime(func() {
-			MergeSorter.Sort(utils.MakeBigArray(oneCase.args))
-		})
-		fmt.Println("elements:", oneCase.args.NumberOfElements, "duration:", dur)
+		fmt.Println("**************************************")
+		fmt.Println(s)
+		for caseInd := 0; caseInd < numberOfCasesToRun; caseInd++ {
+			probeSlice := utils.MakeBigArray(cases[caseInd].args)
+			dur = utils.ElapsedTime(func() {
+				s.Sort(probeSlice)
+			})
+			fmt.Println("randoms:", cases[caseInd].args.NumberOfElements, "duration:", dur)
+			dur = utils.ElapsedTime(func() {
+				s.Sort(probeSlice)
+			})
+			fmt.Println("sorted:", cases[caseInd].args.NumberOfElements, "duration:", dur)
+			probeSlice[len(probeSlice)-3] = 0
+			dur = utils.ElapsedTime(func() {
+				s.Sort(probeSlice)
+			})
+			fmt.Println("near sorted:", cases[caseInd].args.NumberOfElements, "duration:", dur)
+		}
 	}
 }

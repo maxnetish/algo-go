@@ -1,31 +1,38 @@
 package quick
 
+type sorter struct{}
+
+// Sorter singletone implements Sorter interface
+var Sorter = sorter{}
+
+func (s *sorter) String() string {
+	return "Quick sort (Charles Antony Richard Hoare sort)"
+}
+
+func (s *sorter) Slow() bool {
+	return false
+}
+
 // Sort implements quick sort algorythm
-func Sort(a []int) (swaps int, passes int) {
-	swaps, passes = quicksort(a, 0, len(a)-1)
+func (s *sorter) Sort(a []int) {
+	quicksort(a, 0, len(a)-1)
 	return
 }
 
-func quicksort(a []int, low int, high int) (swaps int, passes int) {
-	passes++
+func quicksort(a []int, low int, high int) {
 	if low < high {
 		// partitioning:
-		pivotIndex, swapsOne := partition(a, low, high)
+		pivotIndex := partition(a, low, high)
 		// now on left of pivotIndex elemnts lesser than a[pivotIndex], on right - elements greater than a[pivotIndex]
-		swaps += swapsOne
 		// repeat partitioning for left and right half
-		swapsOne, passesOne := quicksort(a, low, pivotIndex-1)
-		swaps += swapsOne
-		passes += passesOne
-		swapsOne, passesOne = quicksort(a, pivotIndex, high)
-		swaps += swapsOne
-		passes += passesOne
+		quicksort(a, low, pivotIndex-1)
+		quicksort(a, pivotIndex, high)
 	}
 	return
 }
 
 // partition follow Hoare method
-func partition(a []int, low int, high int) (pivotIndex int, swaps int) {
+func partition(a []int, low int, high int) (pivotIndex int) {
 	// select pivot element: in the middle of segment
 	middleInd := (low + high) / 2
 	pivot := a[middleInd]
@@ -42,7 +49,6 @@ func partition(a []int, low int, high int) (pivotIndex int, swaps int) {
 		if lowCursor >= highCursor {
 			break
 		}
-		swaps++
 		// found elements that sits in wrong half - swaps they
 		a[lowCursor], a[highCursor] = a[highCursor], a[lowCursor]
 		lowCursor++
